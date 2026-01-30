@@ -8,7 +8,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class PatientserviceApplication {
 
 	public static void main(String[] args) {
-   ConfigurableApplicationContext psmain = SpringApplication.run(PatientserviceApplication.class, args);
+   ConfigurableApplicationContext psmain = 
+   SpringApplication.run(PatientserviceApplication.class, args);
 	}
 
 }
