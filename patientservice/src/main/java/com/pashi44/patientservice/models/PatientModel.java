@@ -1,7 +1,6 @@
 package com.pashi44.patientservice.models;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,8 +13,8 @@ import jakarta.validation.constraints.NotNull;
 @Entity //resolved to patient_model
 public class PatientModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @NotNull
     private String name;
@@ -34,16 +33,16 @@ private LocalDate registrationDate;
 
 
     /**
-     * @return UUID return the id
+     * @return long return the id
      */
-    public UUID getId() {
+    public long getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(UUID id) {
+    public void setId(long id) {
         this.id = id;
     }
 
