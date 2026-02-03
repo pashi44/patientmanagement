@@ -71,4 +71,11 @@ public class PatientService {
         patientRepository.delete(pat);
     }
 
+    public PatientResponseDTO getPatientById(Long id) {
+        PatientModel pat = patientRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + id));
+        return PatientMapper.toDTO(pat);
+
+    }
+
 }

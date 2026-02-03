@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pashi44.patientservice.dto.PatientRequestDTO;
 import com.pashi44.patientservice.dto.PatientResponseDTO;
+import com.pashi44.patientservice.dto.validators.CreatePatientValidationGroup;
 import com.pashi44.patientservice.service.PatientService;
 
-import jakarta.validation.Valid;
 import jakarta.validation.groups.Default;
 
 @RestController
@@ -40,9 +40,15 @@ public class PatientController {
         return ResponseEntity.ok().body(patients);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PatientResponseDTO> getPatientById(@PathVariable Long id) {
+        PatientResponseDTO patient = patientService.getPatientById(id);
+        return ResponseEntity.ok().body(patient);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<PatientResponseDTO> createPatient(
-            @Valid @RequestBody PatientRequestDTO patientRequestDTO) {
+            @Validated({Default.class, CreatePatientValidationGroup.class}) @RequestBody PatientRequestDTO patientRequestDTO) {
         PatientResponseDTO createdPatient = patientService.createPatient(patientRequestDTO);
 
         return ResponseEntity.ok().body(createdPatient);
