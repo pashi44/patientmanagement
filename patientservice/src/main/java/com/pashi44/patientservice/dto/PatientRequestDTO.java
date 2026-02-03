@@ -1,5 +1,7 @@
 package com.pashi44.patientservice.dto;
 
+import com.pashi44.patientservice.dto.validators.CreatePatientValidationGroup;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -20,7 +22,9 @@ public class PatientRequestDTO {
     @NotBlank(message = "Date of Birth is mandatory")
     @Size(max = 10, message = "Date of Birth must be in the format YYYY-MM-DD")
     private String dateOfBirth;
-    @NotBlank(message = "Registration Date is mandatory")
+
+    //the groups tells to find the exception  fields for this registration field
+    @NotBlank(groups = CreatePatientValidationGroup.class, message = "Registration Date is mandatory")
     @Size(max = 10, message = "Registration Date must be in the format YYYY-MM-DD")
     private String registrationDate;
 
@@ -81,18 +85,5 @@ public class PatientRequestDTO {
         this.dateOfBirth = dateOfBirth;
     }
 
-    /**
-     * @return String return the registrationDate
-     */
-    public String getRegistrationDate() {
-        return registrationDate;
-    }
-
-    /**
-     * @param registrationDate the registrationDate to set
-     */
-    public void setRegistrationDate(String registrationDate) {
-        this.registrationDate = registrationDate;
-    }
 
 }
