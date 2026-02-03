@@ -3,8 +3,9 @@ package com.pashi44.patientservice.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,12 +19,12 @@ import com.pashi44.patientservice.dto.PatientResponseDTO;
 import com.pashi44.patientservice.service.PatientService;
 
 import jakarta.validation.Valid;
+import jakarta.validation.groups.Default;
 
 @RestController
 @RequestMapping("/api/patients")
 
 public class PatientController {
-
 
     private final PatientService patientService;
 
@@ -36,31 +37,32 @@ public class PatientController {
 
     public ResponseEntity<List<PatientResponseDTO>> getPatients() {
         List<PatientResponseDTO> patients = patientService.getAllPatients();
-        return ResponseEntity.ok().body( patients);
+        return ResponseEntity.ok().body(patients);
     }
-
-
 
     @PostMapping("/create")
     public ResponseEntity<PatientResponseDTO> createPatient(
-        @Valid @RequestBody PatientRequestDTO patientRequestDTO) {
+            @Valid @RequestBody PatientRequestDTO patientRequestDTO) {
         PatientResponseDTO createdPatient = patientService.createPatient(patientRequestDTO);
-        
-   
+
         return ResponseEntity.ok().body(createdPatient);
 
-
-    // return ResponseEntity.status(HttpStatus.CREATED).body(createdPatient);
+        // return ResponseEntity.status(HttpStatus.CREATED).body(createdPatient);
     }
 
-
-@PutMapping("/update/{id}")
+    @PutMapping("/update/{id}")
 //the pathvariable decorator tells to map the id in seach bar to map to the method parameter
-public ResponseEntity<PatientResponseDTO> updatePatient(
-    @PathVariable Long id,
-    @Valid @RequestBody PatientRequestDTO patientRequestDTO) {
-    PatientResponseDTO updatedPatient = patientService.updatePatient(id, patientRequestDTO);
-    return ResponseEntity.ok().body(updatedPatient);
-}
+    public ResponseEntity<PatientResponseDTO> updatePatient(
+            @PathVariable Long id,
+            @Validated({Default.class}) @RequestBody PatientRequestDTO patientRequestDTO) {
+        PatientResponseDTO updatedPatient = patientService.updatePatient(id, patientRequestDTO);
+        return ResponseEntity.ok().body(updatedPatient);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deletePatient(@PathVariable Long id) {
+        patientService.deletePatient(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }

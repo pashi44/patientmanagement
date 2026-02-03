@@ -3,15 +3,19 @@ package com.pashi44.patientservice.dto;
 import com.pashi44.patientservice.dto.validators.CreatePatientValidationGroup;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class PatientRequestDTO {
 
     @NotBlank(message = "Name is mandatory")
+    @NotNull(message="Name shouldn't  be  null")
     @Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
     private String name;
 
     @NotBlank(message = "Email is mandatory")
+    @NotEmpty(message = "Email must not be empty")
     @Size(max = 100, message = "Email must be less than 100 characters")
     private String email;
 
