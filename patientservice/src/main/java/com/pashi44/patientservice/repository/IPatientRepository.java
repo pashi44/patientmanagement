@@ -7,4 +7,7 @@ import com.pashi44.patientservice.models.PatientModel;
 @Repository
 public interface IPatientRepository extends JpaRepository<PatientModel, Long> {
 
+boolean existsByEmail(String email);
+
+
 }
