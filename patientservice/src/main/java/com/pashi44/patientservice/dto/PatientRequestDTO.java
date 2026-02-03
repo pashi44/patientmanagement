@@ -1,16 +1,18 @@
 package com.pashi44.patientservice.dto;
 
 import com.pashi44.patientservice.dto.validators.CreatePatientValidationGroup;
+import com.pashi44.patientservice.dto.validators.OnUpdate;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
 
 public class PatientRequestDTO {
 
     @NotBlank(message = "Name is mandatory")
-    @NotNull(message="Name shouldn't  be  null")
+    @NotNull(message = "Name shouldn't  be  null")
     @Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
     private String name;
 
@@ -29,9 +31,9 @@ public class PatientRequestDTO {
 
     //the groups tells to find the exception  fields for this registration field
     @NotBlank(groups = CreatePatientValidationGroup.class, message = "Registration Date is mandatory")
+    @Null(groups = OnUpdate.class)
     @Size(max = 10, message = "Registration Date must be in the format YYYY-MM-DD")
     private String registrationDate;
-
 
     /**
      * @return String return the name
@@ -89,5 +91,12 @@ public class PatientRequestDTO {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public String getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(String registrationDate) {
+        this.registrationDate = registrationDate;
+    }
 
 }
