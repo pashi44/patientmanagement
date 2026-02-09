@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+//default for all other language  namespacing 
+package  billing;
+//the below option tells to generate multiple class files
+option java_multiple_files = true;
+
+//the below option specifies the Java package name overriding the default  package namespace for another language
+option java_package= "com.pashi44.billing";
+
+service BillingService {
+
+    rpc CreateBillingAccount(BillingRequest)  returns (BillingResponse);
+}
+
+message BillingRequest {
+    int64 id = 1;
+    string  name = 2;
+
+    string  email = 3;
+
+    string dateOfBirth = 4;
+}
+
+message BillingResponse {
+
+    string accountId = 1;
+
+    string status = 2; 
+}
